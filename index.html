@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modulo di prova</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  h1 { font-size: 1.4rem; }
+  label { display: block; margin-top: 1rem; font-weight: bold; }
+  input, textarea { width: 100%; padding: .5rem; margin-top: .25rem; border: 1px solid #999; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
+  textarea { min-height: 80px; }
+  .azioni { margin-top: 1.5rem; display: flex; gap: .75rem; flex-wrap: wrap; }
+  button { padding: .6rem 1rem; font-size: 1rem; border: 0; border-radius: 4px; cursor: pointer; background: #2d6a4f; color: #fff; }
+  @media print { .azioni { display: none; } }
+</style>
+</head>
+<body>
+
+<h1>Modulo di prova</h1>
+
+<form id="modulo">
+  <label>Nome e cognome
+    <input type="text" name="nome">
+  </label>
+  <label>Email
+    <input type="email" name="email">
+  </label>
+  <label>Data
+    <input type="date" name="data">
+  </label>
+  <label>Note
+    <textarea name="note"></textarea>
+  </label>
+</form>
+
+<div class="azioni">
+  <button onclick="window.print()">Stampa / Salva PDF</button>
+  <button onclick="scaricaDati()">Scarica dati (.txt)</button>
+</div>
+
+<script>
+function scaricaDati() {
+  const form = document.getElementById('modulo');
+  const dati = new FormData(form);
+  let testo = '';
+  for (const [campo, valore] of dati.entries()) {
+    testo += campo + ': ' + valore + '\n';
+  }
+  const blob = new Blob([testo], { type: 'text/plain' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'modulo-compilato.txt';
+  link.click();
+}
+</script>
+
+</body>
+</html>
